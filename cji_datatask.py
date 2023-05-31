@@ -11,7 +11,8 @@ client_data['Case Closed Date'] = pd.to_datetime(client_data['Case Closed Date']
 ## Determine the age of clients at the time of case opening and add it to the client data frame
 for client in client_data:
     #Calculate the age of the client at the time of case opening in years rounded down the year and add it to the client data frame
-    client_data['Age at Case Opening'] = (client_data['Case Opened Date'].dt.year - client_data['Date of Birth'].dt.year).astype(int)
+    client_data['Age at Case Opening'] = (client_data['Case Opened Date'].dt.year 
+                                          - client_data['Date of Birth'].dt.year).astype(int)
 
 # Identify client id of clients with an Age at Case Opening of less than 15 years
 client_age_less_than_15 = client_data[client_data['Age at Case Opening'] < 15]
@@ -38,7 +39,9 @@ client_data_greater_than_or_equal_to_25 = client_data[client_data['Age at Case O
 #Question 1: How many clients atteneded individual counseling in 2019?
 
 #Create a data frame for clients who attended individual counseling in 2019 with the attended column equal to Y
-individual_counseling_2019 = program_data[(program_data['Program'] == 'Individual Counseling') & (program_data['Date'].dt.year == 2019) & (program_data['Attended'] == 'Y')]
+individual_counseling_2019 = program_data[(program_data['Program'] == 'Individual Counseling') 
+                                          & (program_data['Date'].dt.year == 2019) 
+                                          & (program_data['Attended'] == 'Y')]
 
 #Create a list of the unique client ids for clients who attended individual counseling in 2019
 individual_counseling_2019_client_ids = individual_counseling_2019['Person ID'].unique()
@@ -70,9 +73,11 @@ group_counseling_2019_client_ids = group_counseling_2019['Person ID'].unique()
 client_data_group_counseling_2019 = client_data[client_data['Person ID'].isin(group_counseling_2019_client_ids)]
 
 #Print the number of clients who attended group counseling in 2019 with an age of less than 25
-print('The number of clients who attended group counseling in 2019 with an age of less than 25 is ' + str(len(client_data_group_counseling_2019[client_data_group_counseling_2019['Age at Case Opening'] < 25])))
+print('The number of clients who attended group counseling in 2019 with an age of less than 25 is ' 
+      + str(len(client_data_group_counseling_2019[client_data_group_counseling_2019['Age at Case Opening'] < 25])))
 #Print the number of clients who attended group counseling in 2019 with an age of greater than or equal to 25
-print('The number of clients who attended group counseling in 2019 with an age of greater than or equal to 25 is ' + str(len(client_data_group_counseling_2019[client_data_group_counseling_2019['Age at Case Opening'] >= 25])))
+print('The number of clients who attended group counseling in 2019 with an age of greater than or equal to 25 is ' 
+      + str(len(client_data_group_counseling_2019[client_data_group_counseling_2019['Age at Case Opening'] >= 25])))
 
 ###########################################################################
 ###########################################################################
@@ -84,10 +89,16 @@ print('The number of clients who attended group counseling in 2019 with an age o
 individual_counseling = program_data[(program_data['Program'] == 'Individual Counseling') & (program_data['Attended'] == 'Y')]
 
 #Print the average number of individual counseling sessions attended per individual per year for those aged 25 or older
-print('Of the individuals who attended at least one individual counseling session, the average number of individual counseling sessions attended by year for those aged 25 or older\n' + str(individual_counseling[individual_counseling['Person ID'].isin(client_data_greater_than_or_equal_to_25['Person ID'])].groupby([individual_counseling['Date'].dt.year, 'Person ID']).size().groupby(level=0).mean()))
+print('Of the individuals who attended at least one individual counseling session, the average number of individual counseling sessions attended by year for those aged 25 or older\n' 
+      + str(individual_counseling[individual_counseling['Person ID'].
+                                  isin(client_data_greater_than_or_equal_to_25['Person ID'])].
+                                  groupby([individual_counseling['Date'].dt.year, 'Person ID']).size().groupby(level=0).mean()))
 
 #Print the average number of individual counseling sessions attended per individual per year for those aged less than 25
-print('Of the individuals who attended at least one individual counseling session, the average number of individual counseling sessions attended by year for those aged less than 25\n' + str(individual_counseling[individual_counseling['Person ID'].isin(client_data_less_than_25['Person ID'])].groupby([individual_counseling['Date'].dt.year, 'Person ID']).size().groupby(level=0).mean()))
+print('Of the individuals who attended at least one individual counseling session, the average number of individual counseling sessions attended by year for those aged less than 25\n' 
+      + str(individual_counseling[individual_counseling['Person ID'].
+                                  isin(client_data_less_than_25['Person ID'])].
+                                  groupby([individual_counseling['Date'].dt.year, 'Person ID']).size().groupby(level=0).mean()))
 
 ###########################################################################
 ###########################################################################
