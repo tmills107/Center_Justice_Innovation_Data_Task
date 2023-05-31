@@ -88,6 +88,12 @@ print('The number of clients who attended group counseling in 2019 with an age o
 #Create a data frame for clients who attended individual counseling with the attended column equal to Y
 individual_counseling = program_data[(program_data['Program'] == 'Individual Counseling') & (program_data['Attended'] == 'Y')]
 
+#Identify the average number of individual counseling sessions attended per individual per year for those of all ages
+print('Of the individuals who attended at least one individual counseling session, the average number of individual counseling sessions attended by year for those of all ages\n' 
+      + str(individual_counseling[individual_counseling['Person ID'].
+                                  isin(client_data['Person ID'])].
+                                  groupby([individual_counseling['Date'].dt.year, 'Person ID']).size().groupby(level=0).mean()))
+
 #Print the average number of individual counseling sessions attended per individual per year for those aged 25 or older
 print('Of the individuals who attended at least one individual counseling session, the average number of individual counseling sessions attended by year for those aged 25 or older\n' 
       + str(individual_counseling[individual_counseling['Person ID'].
@@ -159,3 +165,23 @@ print('Excluding cancelled sessions and open cases, these clients aged <25 had i
 ###########################################################################
 ###########################################################################
 ###########################################################################
+
+#Additional Question: Of the individuals who attended at least one group counseling session, what is the average number of group counseling sessions attended by year?
+
+#Identify the average number of group counseling sessions attended per individual per year for those of all ages
+print('Of the individuals who attended at least one group counseling session, the average number of group counseling sessions attended by year for those of all ages\n' 
+      + str(group_counseling[group_counseling['Person ID'].
+                                  isin(client_data['Person ID'])].
+                                  groupby([group_counseling['Date'].dt.year, 'Person ID']).size().groupby(level=0).mean()))
+
+#Print the average number of group counseling sessions attended per individual per year for those aged 25 or older
+print('Of the individuals who attended at least one group counseling session, the average number of group counseling sessions attended by year for those aged 25 or older\n' 
+      + str(group_counseling[group_counseling['Person ID'].
+                                  isin(client_data_greater_than_or_equal_to_25['Person ID'])].
+                                  groupby([group_counseling['Date'].dt.year, 'Person ID']).size().groupby(level=0).mean()))
+
+#Print the average number of group counseling sessions attended per individual per year for those aged less than 25
+print('Of the individuals who attended at least one group counseling session, the average number of group counseling sessions attended by year for those aged less than 25\n' 
+      + str(group_counseling[group_counseling['Person ID'].
+                                  isin(client_data_less_than_25['Person ID'])].
+                                  groupby([group_counseling['Date'].dt.year, 'Person ID']).size().groupby(level=0).mean()))
